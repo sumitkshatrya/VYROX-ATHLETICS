@@ -193,7 +193,7 @@ In `server/.env` (a `.env.example` file is provided):
 
 ```ini
 PORT=5000
-CLIENT_ORIGIN=http://localhost:5173
+CLIENT_ORIGIN=https://vyrox-athletics.onrender.com,http://localhost:5173
 
 # Optional: Set your OpenAI API key
 OPENAI_API_KEY=your_openai_api_key_here
@@ -203,6 +203,30 @@ OPENAI_MODEL=gpt-4o-mini
 GEMINI_API_KEY=your_gemini_api_key_here
 GEMINI_MODEL=gemini-1.5-flash
 ```
+
+In `client/.env` (or Render Static Site Environment Variables):
+```ini
+VITE_API_URL=https://vyrox-athletics-api.onrender.com
+```
+
+### 3. Render Production Deployment Settings
+
+#### A. Backend Web Service (`vyrox-athletics-api.onrender.com`)
+- **Root Directory:** `server`
+- **Build Command:** `npm install`
+- **Start Command:** `npm start` (or `node server.js`)
+- **Environment Variables:**
+  - `PORT`: `5000` (or leave default for Render)
+  - `CLIENT_ORIGIN`: `https://vyrox-athletics.onrender.com`
+  - `GEMINI_API_KEY` / `OPENAI_API_KEY`: *(optional)*
+
+#### B. Frontend Static Site (`vyrox-athletics.onrender.com`)
+- **Root Directory:** `client`
+- **Build Command:** `npm install && npm run build`
+- **Publish Directory:** `dist`
+- **Environment Variables:**
+  - `VITE_API_URL`: `https://vyrox-athletics-api.onrender.com`
+- **Redirects:** Render automatically honors `public/_redirects` (`/* /index.html 200`) for SPA routing.
 
 > **Note on AI Keys:** The backend includes an intelligent fallback knowledge-base responder grounded in real gym facts. If an API key is not supplied or encounters rate limits, the chat advisor and fitness agent seamlessly return structured, science-backed protocols without crashing or exposing errors.
 

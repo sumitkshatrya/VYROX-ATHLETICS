@@ -1,8 +1,9 @@
 // Client AI Service to communicate with the secure Node.js backend
+import { API_BASE_URL } from './apiConfig';
 
 export async function sendChatMessage(message, history = [], context = {}) {
   try {
-    const res = await fetch('/api/ai/chat', {
+    const res = await fetch(`${API_BASE_URL}/api/ai/chat`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -28,7 +29,7 @@ export async function sendChatMessage(message, history = [], context = {}) {
 
 export async function getFitnessPlan(preferences) {
   try {
-    const res = await fetch('/api/ai/fitness-plan', {
+    const res = await fetch(`${API_BASE_URL}/api/ai/fitness-plan`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,11 +51,10 @@ export async function getFitnessPlan(preferences) {
 
 export async function checkAiStatus() {
   try {
-    const res = await fetch('/api/ai/status');
+    const res = await fetch(`${API_BASE_URL}/api/ai/status`);
     if (!res.ok) return { status: 'offline' };
     return await res.json();
   } catch (error) {
     return { status: 'offline' };
   }
 }
-

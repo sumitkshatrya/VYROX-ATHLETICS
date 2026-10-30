@@ -1,8 +1,9 @@
 // Client API Service for Contact and General Backend interactions
+import { API_BASE_URL } from './apiConfig';
 
 export async function submitContact(formData) {
   try {
-    const res = await fetch('/api/contact/submit', {
+    const res = await fetch(`${API_BASE_URL}/api/contact/submit`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -24,10 +25,9 @@ export async function submitContact(formData) {
 
 export async function checkServerHealth() {
   try {
-    const res = await fetch('/api/health');
+    const res = await fetch(`${API_BASE_URL}/api/health`);
     return await res.json();
   } catch (error) {
     return { status: 'offline' };
   }
 }
-
